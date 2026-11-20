@@ -54,7 +54,7 @@ Discord-бот не нужен: в каждом проекте OpenProject мо�
 ```ruby
 group :opf_plugins do
   gem "openproject-discord",
-      git: "https://github.com/openproject/openproject-discord.git",
+      git: "https://github.com/kiriharu/openproject-discord.git",
       tag: "v0.1.0"
 end
 ```
@@ -139,7 +139,7 @@ OpenProject агрегирует уведомления журнала за ко
 Склонируйте плагин в каталог `plugins` установки OpenProject:
 
 ```bash
-git clone https://github.com/openproject/openproject-discord.git \
+git clone https://github.com/kiriharu/openproject-discord.git \
   plugins/openproject-discord
 ```
 

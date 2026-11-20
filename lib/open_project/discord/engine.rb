@@ -10,7 +10,7 @@ module OpenProject
       include OpenProject::Plugins::ActsAsOpEngine
 
       register "openproject-discord",
-               author_url: "https://github.com/openproject/openproject-discord",
+               author_url: "https://github.com/kiriharu/openproject-discord",
                requires_openproject: ">= 16.0.0",
                settings: {
                  default: {
@@ -55,12 +55,16 @@ module OpenProject
 
       patches %i[Project WorkPackage WikiPage]
 
+      initializer "openproject_discord.filter_parameters" do |app|
+        # Webhook URLs are credentials: keep them out of request logs.
+        app.config.filter_parameters += %i[webhook_url]
+      end
+
       initializer "openproject_discord.subscribe_to_notifications" do |app|
         app.config.after_initialize do
           ::DiscordIntegration::EventSubscriber.subscribe!
         end
       end
-
     end
   end
 end

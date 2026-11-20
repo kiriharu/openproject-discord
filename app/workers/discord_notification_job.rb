@@ -15,6 +15,7 @@ class DiscordNotificationJob < ApplicationJob
 
     channel = DiscordChannel.find_by(id: channel_id)
     return unless channel&.enabled?
+    return unless channel.project&.module_enabled?(:discord_notifications)
     return unless channel.subscribed_to_any?(event_names)
 
     payload = JSON.parse(payload_json)

@@ -12,11 +12,11 @@ Gem::Specification.new do |s|
   s.description = "Sends configurable notifications about work package and wiki page changes " \
                   "from OpenProject projects to Discord channels via webhooks."
   s.license     = "GPL-3.0-only"
-  s.homepage    = "https://github.com/openproject/openproject-discord"
+  s.homepage    = "https://github.com/kiriharu/openproject-discord"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + %w[README.md README_RU.md CHANGELOG.md LICENSE]
 
   s.required_ruby_version = ">= 3.4.0"
   s.metadata["rubygems_mfa_required"] = "true"
-  s.metadata["source_code_uri"] = "https://github.com/openproject/openproject-discord"
+  s.metadata["source_code_uri"] = "https://github.com/kiriharu/openproject-discord"
 end

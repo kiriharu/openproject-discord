@@ -54,7 +54,7 @@ reproducible production builds pin a release tag:
 ```ruby
 group :opf_plugins do
   gem "openproject-discord",
-      git: "https://github.com/openproject/openproject-discord.git",
+      git: "https://github.com/kiriharu/openproject-discord.git",
       tag: "v0.1.0"
 end
 ```
@@ -136,7 +136,7 @@ The plugin adds a `discord_channels` association to `Project`.
 Clone the plugin into the `plugins` directory of an OpenProject checkout:
 
 ```bash
-git clone https://github.com/openproject/openproject-discord.git \
+git clone https://github.com/kiriharu/openproject-discord.git \
   plugins/openproject-discord
 ```
 
