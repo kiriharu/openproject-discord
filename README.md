@@ -3,9 +3,8 @@
 [English](README.md) | [Русский](README_RU.md)
 
 OpenProject plugin that posts work package and wiki page changes to Discord
-channels. It is modelled on the structure of
-[openproject-finances](https://github.com/reygasai/openproject-finances), but
-instead of finance entries it delivers configurable Discord notifications.
+channels. It delivers configurable Discord notifications per project and
+channel.
 
 No Discord bot is required: each OpenProject project can define one or more
 Discord webhooks and select the events that should be sent to each channel.
