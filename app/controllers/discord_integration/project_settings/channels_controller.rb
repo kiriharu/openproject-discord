@@ -60,8 +60,11 @@ module DiscordIntegration
           response_body: response.body
         )
 
+        warnings = test_warnings
+
         if response.success?
           flash[:notice] = I18n.t("discord.project_settings.test_success")
+          flash[:warning] = warnings.join(" ") if warnings.any?
         else
           flash[:error] = I18n.t("discord.project_settings.test_failure", error: response.error)
         end
@@ -80,6 +83,20 @@ module DiscordIntegration
 
       def find_channel
         @channel = @project.discord_channels.find(params[:id])
+      end
+
+      def test_warnings
+        warnings = []
+        unless @project.module_enabled?(:discord_notifications)
+          warnings << I18n.t("discord.project_settings.warning_module_disabled")
+        end
+        unless DiscordIntegration::Settings.enabled?
+          warnings << I18n.t("discord.project_settings.warning_global_disabled")
+        end
+        if Array(@channel.events).empty?
+          warnings << I18n.t("discord.project_settings.warning_no_events")
+        end
+        warnings
       end
 
       def channel_attributes

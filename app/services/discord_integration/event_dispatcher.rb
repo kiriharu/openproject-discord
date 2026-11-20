@@ -76,10 +76,23 @@ module DiscordIntegration
                      .for_project(project_id)
                      .select { |channel| channel.subscribed_to_any?(event_names) }
 
+        if channels.empty?
+          Rails.logger.info(
+            "[OpenProject Discord] No matching channels for #{event_names.join(', ')} " \
+            "in project #{project.identifier}"
+          )
+          return
+        end
+
         payload_json = JSON.generate(payload)
         channels.each do |channel|
           DiscordNotificationJob.perform_later(channel.id, event_names, payload_json)
         end
+
+        Rails.logger.info(
+          "[OpenProject Discord] Enqueued #{channels.size} notification(s) for " \
+          "#{event_names.join(', ')} in project #{project.identifier}"
+        )
       end
 
       def log_error(context, error)

@@ -33,6 +33,13 @@ class DiscordNotificationJob < ApplicationJob
       response_body: response.body
     )
 
+    unless response.success?
+      Rails.logger.warn(
+        "[OpenProject Discord] Delivery failed for channel #{channel.id}: " \
+        "status=#{response.status.inspect} error=#{response.error}"
+      )
+    end
+
     raise DiscordIntegration::WebhookClient::RetryableError, response.error if response.retryable?
   rescue JSON::ParserError => e
     Rails.logger.error("[OpenProject Discord] Invalid payload for channel #{channel_id}: #{e.message}")
