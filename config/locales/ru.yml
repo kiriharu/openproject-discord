@@ -1,0 +1,97 @@
+ru:
+  plugin_openproject_discord:
+    name: "OpenProject Discord"
+    description: "Отправляет изменения пакетов работ и Wiki из OpenProject в каналы Discord."
+
+  activerecord:
+    models:
+      discord_channel: "Канал Discord"
+      discord_delivery: "Доставка в Discord"
+    attributes:
+      discord_channel:
+        name: "Название канала"
+        webhook_url: "URL вебхука Discord"
+        username: "Имя бота"
+        enabled: "Включено"
+        events: "События"
+        project: "Проект"
+
+  discord:
+    admin:
+      menu_title: "Discord"
+      general: "Общие настройки"
+      enabled: "Включить уведомления в Discord"
+      username: "Имя вебхука по умолчанию"
+      username_caption: "Имя, которое отображается в Discord, если для канала не задано своё имя."
+      avatar_url: "URL аватара по умолчанию"
+      avatar_url_caption: "Необязательный HTTPS-адрес аватара для вебхука."
+      content: "Содержимое сообщений"
+      include_private_notes: "Добавлять внутренние комментарии"
+      include_wiki_excerpt: "Добавлять фрагмент страницы Wiki"
+      overview_title: "Настроенные каналы проектов"
+      overview_description: "Каналы настраиваются в каждом проекте: Настройки проекта → Discord. Эта таблица даёт администратору общий обзор."
+      no_channels: "Каналы Discord ещё не настроены."
+
+    event_groups:
+      work_package: "Пакеты работ (задания)"
+      wiki_page: "Страницы Wiki"
+
+    events:
+      work_package_created: "Пакет работ создан"
+      work_package_updated: "Пакет работ изменён"
+      work_package_status_changed: "Изменён статус"
+      work_package_assignee_changed: "Изменён исполнитель"
+      work_package_commented: "Добавлен комментарий"
+      work_package_deleted: "Пакет работ удалён"
+      wiki_page_created: "Страница Wiki создана"
+      wiki_page_updated: "Страница Wiki изменена"
+      wiki_page_deleted: "Страница Wiki удалена"
+
+    fields:
+      project: "Проект"
+      type: "Тип"
+      status: "Статус"
+      assignee: "Исполнитель"
+      priority: "Приоритет"
+      author: "Автор"
+      changed_by: "Изменил"
+      deleted_by: "Удалил"
+      changes: "Изменения"
+      content: "Содержимое"
+      page: "Страница"
+      version: "Версия"
+      channel: "Канал"
+
+    messages:
+      footer: "%{app} • уведомления Discord"
+      changes: "Изменено: %{fields}"
+      work_package_deleted: "Пакет работ был удалён."
+      wiki_page_deleted: "Страница Wiki была удалена."
+      test_title: "Тестовое уведомление из OpenProject"
+      test_description: "Если вы видите это сообщение, вебхук Discord настроен правильно."
+
+    project_settings:
+      menu_title: "Discord"
+      title: "Уведомления в Discord"
+      description: "Выберите, какие изменения пакетов работ и Wiki будут отправляться в этот канал Discord."
+      add_channel: "Добавить канал"
+      new_title: "Добавление канала Discord"
+      edit_title: "Редактирование канала Discord"
+      empty_title: "Каналы Discord не настроены"
+      empty_description: "Добавьте вебхук Discord, чтобы начать получать уведомления проекта."
+      no_events: "События не выбраны"
+      general: "Канал"
+      name_caption: "Понятное название только для OpenProject, например «#обновления-проекта»."
+      webhook_caption: "В Discord откройте настройки канала → Интеграции → Вебхуки и скопируйте URL вебхука."
+      username_caption: "Необязательно. Переопределяет имя вебхука по умолчанию для этого канала."
+      enabled_caption: "Снимите флажок, чтобы приостановить уведомления, не удаляя канал."
+      events_title: "События для отправки"
+      events_caption: "Канал получает одно сообщение на изменение, если выбрано хотя бы одно подходящее событие. «Пакет работ изменён» охватывает все изменения пакета работ."
+      test: "Отправить тест"
+      test_success: "Тестовое сообщение отправлено в Discord."
+      test_failure: "Discord отклонил тестовое сообщение: %{error}"
+      confirm_delete: "Удалить этот канал Discord? Уведомления прекратятся сразу."
+      help_title: "Как получить URL вебхука Discord"
+      help_step_1: "Откройте нужный канал в Discord и выберите «Изменить канал»."
+      help_step_2: "Перейдите в Интеграции → Вебхуки → Новый вебхук и скопируйте URL вебхука."
+      help_step_3: "Вставьте URL сюда, выберите события и сохраните. Кнопка «Отправить тест» проверит подключение."

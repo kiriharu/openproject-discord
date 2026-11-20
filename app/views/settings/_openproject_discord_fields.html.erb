@@ -1,0 +1,60 @@
+<% raw_settings = (local_assigns[:settings] || {}).to_h.stringify_keys.reject { |_key, value| value.nil? } %>
+<% plugin_settings = DiscordIntegration::Settings::DEFAULTS.merge(raw_settings) %>
+<% enabled = ActiveModel::Type::Boolean.new.cast(plugin_settings["enabled"]) %>
+<% include_private_notes = ActiveModel::Type::Boolean.new.cast(plugin_settings["include_private_notes"]) %>
+<% include_wiki_excerpt = ActiveModel::Type::Boolean.new.cast(plugin_settings["include_wiki_excerpt"]) %>
+
+<fieldset class="form--fieldset">
+  <legend class="form--fieldset-legend"><%= t("discord.admin.general") %></legend>
+
+  <div class="form--field">
+    <label class="form--label" for="settings_enabled"><%= t("discord.admin.enabled") %></label>
+    <div class="form--field-container">
+      <%= hidden_field_tag "settings[enabled]", 0 %>
+      <%= check_box_tag "settings[enabled]", 1, enabled, id: "settings_enabled" %>
+    </div>
+    <div class="form--field-instructions"><%= t("discord.admin.enabled_caption") %></div>
+  </div>
+
+  <div class="form--field">
+    <label class="form--label" for="settings_username"><%= t("discord.admin.username") %></label>
+    <div class="form--field-container">
+      <%= text_field_tag "settings[username]", plugin_settings["username"], id: "settings_username" %>
+    </div>
+    <div class="form--field-instructions"><%= t("discord.admin.username_caption") %></div>
+  </div>
+
+  <div class="form--field">
+    <label class="form--label" for="settings_avatar_url"><%= t("discord.admin.avatar_url") %></label>
+    <div class="form--field-container">
+      <%= url_field_tag "settings[avatar_url]", plugin_settings["avatar_url"], id: "settings_avatar_url" %>
+    </div>
+    <div class="form--field-instructions"><%= t("discord.admin.avatar_url_caption") %></div>
+  </div>
+</fieldset>
+
+<fieldset class="form--fieldset">
+  <legend class="form--fieldset-legend"><%= t("discord.admin.content") %></legend>
+
+  <div class="form--field">
+    <label class="form--label" for="settings_include_private_notes">
+      <%= t("discord.admin.include_private_notes") %>
+    </label>
+    <div class="form--field-container">
+      <%= hidden_field_tag "settings[include_private_notes]", 0 %>
+      <%= check_box_tag "settings[include_private_notes]", 1, include_private_notes,
+                        id: "settings_include_private_notes" %>
+    </div>
+  </div>
+
+  <div class="form--field">
+    <label class="form--label" for="settings_include_wiki_excerpt">
+      <%= t("discord.admin.include_wiki_excerpt") %>
+    </label>
+    <div class="form--field-container">
+      <%= hidden_field_tag "settings[include_wiki_excerpt]", 0 %>
+      <%= check_box_tag "settings[include_wiki_excerpt]", 1, include_wiki_excerpt,
+                        id: "settings_include_wiki_excerpt" %>
+    </div>
+  </div>
+</fieldset>

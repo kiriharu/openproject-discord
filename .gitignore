@@ -1,0 +1,6 @@
+/.bundle
+/log
+/tmp
+/coverage
+*.gem
+.DS_Store

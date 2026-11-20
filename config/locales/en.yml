@@ -1,0 +1,97 @@
+en:
+  plugin_openproject_discord:
+    name: "OpenProject Discord"
+    description: "Sends work package and wiki changes from OpenProject to Discord channels."
+
+  activerecord:
+    models:
+      discord_channel: "Discord channel"
+      discord_delivery: "Discord delivery"
+    attributes:
+      discord_channel:
+        name: "Channel name"
+        webhook_url: "Discord webhook URL"
+        username: "Bot display name"
+        enabled: "Enabled"
+        events: "Events"
+        project: "Project"
+
+  discord:
+    admin:
+      menu_title: "Discord"
+      general: "General settings"
+      enabled: "Enable Discord notifications"
+      username: "Default webhook name"
+      username_caption: "Name shown in Discord when a channel does not define its own name."
+      avatar_url: "Default avatar URL"
+      avatar_url_caption: "Optional HTTPS URL of an avatar for the webhook."
+      content: "Message content"
+      include_private_notes: "Include internal notes"
+      include_wiki_excerpt: "Include a wiki page excerpt"
+      overview_title: "Configured project channels"
+      overview_description: "Channels are configured per project under Project settings → Discord. This table gives administrators a quick overview."
+      no_channels: "No Discord channels have been configured yet."
+
+    event_groups:
+      work_package: "Work packages"
+      wiki_page: "Wiki pages"
+
+    events:
+      work_package_created: "Work package created"
+      work_package_updated: "Work package updated"
+      work_package_status_changed: "Status changed"
+      work_package_assignee_changed: "Assignee changed"
+      work_package_commented: "Comment added"
+      work_package_deleted: "Work package deleted"
+      wiki_page_created: "Wiki page created"
+      wiki_page_updated: "Wiki page updated"
+      wiki_page_deleted: "Wiki page deleted"
+
+    fields:
+      project: "Project"
+      type: "Type"
+      status: "Status"
+      assignee: "Assignee"
+      priority: "Priority"
+      author: "Author"
+      changed_by: "Changed by"
+      deleted_by: "Deleted by"
+      changes: "Changes"
+      content: "Content"
+      page: "Page"
+      version: "Version"
+      channel: "Channel"
+
+    messages:
+      footer: "%{app} • Discord notifications"
+      changes: "Changed: %{fields}"
+      work_package_deleted: "The work package was deleted."
+      wiki_page_deleted: "The wiki page was deleted."
+      test_title: "Test notification from OpenProject"
+      test_description: "If you can see this message, the Discord webhook is configured correctly."
+
+    project_settings:
+      menu_title: "Discord"
+      title: "Discord notifications"
+      description: "Choose which work package and wiki changes are posted to this Discord channel."
+      add_channel: "Add channel"
+      new_title: "Add Discord channel"
+      edit_title: "Edit Discord channel"
+      empty_title: "No Discord channels configured"
+      empty_description: "Add a Discord webhook to start receiving project notifications."
+      no_events: "No events selected"
+      general: "Channel"
+      name_caption: "A friendly name used only inside OpenProject, for example “#project-updates”."
+      webhook_caption: "In Discord open Channel settings → Integrations → Webhooks and copy the webhook URL."
+      username_caption: "Optional. Overrides the default webhook name for this channel."
+      enabled_caption: "Disable this checkbox to pause notifications without deleting the channel."
+      events_title: "Events to send"
+      events_caption: "A channel receives one message per change when at least one matching event is selected. “Updated” covers all work package updates."
+      test: "Send test"
+      test_success: "The test message was sent to Discord."
+      test_failure: "Discord rejected the test message: %{error}"
+      confirm_delete: "Delete this Discord channel? Notifications will stop immediately."
+      help_title: "How to get a Discord webhook URL"
+      help_step_1: "Open the required channel in Discord and choose Edit channel."
+      help_step_2: "Go to Integrations → Webhooks → New Webhook and copy the webhook URL."
+      help_step_3: "Paste the URL here, select the events and save. Use “Send test” to verify the connection."

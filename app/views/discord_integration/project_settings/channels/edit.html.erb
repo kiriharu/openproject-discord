@@ -1,0 +1,16 @@
+<% html_title t("discord.project_settings.edit_title") %>
+
+<%=
+  render(Primer::OpenProject::PageHeader.new) do |header|
+    header.with_title { t("discord.project_settings.edit_title") }
+    header.with_breadcrumbs(
+      [
+        { href: project_path(@project), text: @project.name },
+        { href: project_settings_discord_channels_path(@project), text: t("discord.project_settings.title") },
+        @channel.name
+      ]
+    )
+  end
+%>
+
+<%= render "form", channel: @channel, submit_label: t(:button_save) %>

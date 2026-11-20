@@ -1,0 +1,102 @@
+<% html_title t("discord.project_settings.title") %>
+
+<%=
+  render(Primer::OpenProject::PageHeader.new) do |header|
+    header.with_title { t("discord.project_settings.title") }
+    header.with_breadcrumbs(
+      [
+        { href: project_path(@project), text: @project.name },
+        { href: project_settings_general_path(@project), text: t(:label_setting_plural) },
+        t("discord.project_settings.title")
+      ]
+    )
+    header.with_description { t("discord.project_settings.description") }
+  end
+%>
+
+<%=
+  render(Primer::OpenProject::SubHeader.new) do |subheader|
+    subheader.with_action_button(
+      scheme: :primary,
+      leading_icon: :plus,
+      label: t("discord.project_settings.add_channel"),
+      tag: :a,
+      href: new_project_settings_discord_channel_path(@project)
+    ) do
+      t("discord.project_settings.add_channel")
+    end
+  end
+%>
+
+<% if @channels.empty? %>
+  <div class="generic-table--no-results-container">
+    <div class="generic-table--no-results-title">
+      <h2><%= t("discord.project_settings.empty_title") %></h2>
+    </div>
+    <div class="generic-table--no-results-description">
+      <p><%= t("discord.project_settings.empty_description") %></p>
+    </div>
+  </div>
+<% else %>
+  <div class="generic-table--container">
+    <div class="generic-table--results-container">
+      <table class="generic-table" aria-label="<%= t("discord.project_settings.title") %>">
+        <thead>
+          <tr>
+            <th><%= DiscordChannel.human_attribute_name(:name) %></th>
+            <th><%= DiscordChannel.human_attribute_name(:webhook_url) %></th>
+            <th><%= DiscordChannel.human_attribute_name(:events) %></th>
+            <th><%= DiscordChannel.human_attribute_name(:enabled) %></th>
+            <th><span class="hidden-for-sighted"><%= t(:label_actions) %></span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @channels.each do |channel| %>
+            <tr>
+              <td><strong><%= channel.name %></strong></td>
+              <td><code><%= channel.masked_webhook_url %></code></td>
+              <td>
+                <% if channel.event_labels.any? %>
+                  <%= channel.event_labels.join(", ") %>
+                <% else %>
+                  <span class="color-fg-muted"><%= t("discord.project_settings.no_events") %></span>
+                <% end %>
+              </td>
+              <td>
+                <% if channel.enabled? %>
+                  <span class="color-fg-success"><%= t(:label_active) %></span>
+                <% else %>
+                  <span class="color-fg-muted"><%= t(:label_inactive) %></span>
+                <% end %>
+              </td>
+              <td class="buttons">
+                <%= link_to t(:button_edit),
+                            edit_project_settings_discord_channel_path(@project, channel),
+                            class: "button -with-icon icon-edit" %>
+                <%= button_to t("discord.project_settings.test"),
+                              test_message_project_settings_discord_channel_path(@project, channel),
+                              method: :post,
+                              class: "button -with-icon icon-checkmark",
+                              form_class: "inline" %>
+                <%= link_to t(:button_delete),
+                            project_settings_discord_channel_path(@project, channel),
+                            data: {
+                              turbo_method: :delete,
+                              turbo_confirm: t("discord.project_settings.confirm_delete")
+                            },
+                            class: "button -with-icon icon-delete" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
+
+<div class="wiki">
+  <h3><%= t("discord.project_settings.help_title") %></h3>
+  <p><%= t("discord.project_settings.help_step_1") %></p>
+  <p><%= t("discord.project_settings.help_step_2") %></p>
+  <p><%= t("discord.project_settings.help_step_3") %></p>
+</div>

@@ -1,0 +1,49 @@
+<% if local_assigns[:update_url].present? %>
+  <%= form_tag(update_url, method: :post, class: "form") do %>
+    <%= render "settings/openproject_discord_fields", settings: local_assigns[:settings] %>
+    <p>
+      <%= styled_button_tag t(:button_apply), class: "-primary -with-icon icon-checkmark" %>
+    </p>
+  <% end %>
+<% else %>
+  <%= render "settings/openproject_discord_fields", settings: local_assigns[:settings] %>
+<% end %>
+
+<% channels = DiscordChannel.includes(:project).joins(:project).order("projects.name ASC, discord_channels.name ASC") %>
+
+<h2 class="mt-6"><%= t("discord.admin.overview_title") %></h2>
+<p class="form--field-instructions"><%= t("discord.admin.overview_description") %></p>
+
+<% if channels.empty? %>
+  <p class="color-fg-muted"><%= t("discord.admin.no_channels") %></p>
+<% else %>
+  <div class="generic-table--container">
+    <div class="generic-table--results-container">
+      <table class="generic-table" aria-label="<%= t("discord.admin.overview_title") %>">
+        <thead>
+          <tr>
+            <th><%= t(:label_project) %></th>
+            <th><%= DiscordChannel.human_attribute_name(:name) %></th>
+            <th><%= DiscordChannel.human_attribute_name(:events) %></th>
+            <th><%= DiscordChannel.human_attribute_name(:enabled) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% channels.each do |channel| %>
+            <tr>
+              <td>
+                <%= link_to channel.project.name,
+                            project_settings_discord_channels_path(channel.project) %>
+              </td>
+              <td><%= channel.name %></td>
+              <td><%= channel.event_labels.join(", ").presence || t("discord.project_settings.no_events") %></td>
+              <td>
+                <%= channel.enabled? ? t(:label_active) : t(:label_inactive) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

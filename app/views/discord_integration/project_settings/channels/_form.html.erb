@@ -1,0 +1,72 @@
+<%= error_messages_for channel %>
+
+<% form_url = channel.persisted? ?
+     project_settings_discord_channel_path(@project, channel) :
+     project_settings_discord_channels_path(@project) %>
+
+<%= labelled_tabular_form_for channel,
+                              url: form_url,
+                              method: channel.persisted? ? :patch : :post,
+                              as: :discord_channel,
+                              html: { class: "form", autocomplete: "off" } do |f| %>
+  <fieldset class="form--fieldset">
+    <legend class="form--fieldset-legend"><%= t("discord.project_settings.general") %></legend>
+
+    <div class="form--field -required">
+      <%= f.text_field :name, required: true, container_class: "-middle" %>
+      <div class="form--field-instructions">
+        <%= t("discord.project_settings.name_caption") %>
+      </div>
+    </div>
+
+    <div class="form--field -required">
+      <%= f.url_field :webhook_url, required: true, container_class: "-wide" %>
+      <div class="form--field-instructions">
+        <%= t("discord.project_settings.webhook_caption") %>
+      </div>
+    </div>
+
+    <div class="form--field">
+      <%= f.text_field :username, container_class: "-middle" %>
+      <div class="form--field-instructions">
+        <%= t("discord.project_settings.username_caption") %>
+      </div>
+    </div>
+
+    <div class="form--field">
+      <%= f.check_box :enabled %>
+      <div class="form--field-instructions">
+        <%= t("discord.project_settings.enabled_caption") %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="form--fieldset">
+    <legend class="form--fieldset-legend"><%= t("discord.project_settings.events_title") %></legend>
+    <p class="form--field-instructions"><%= t("discord.project_settings.events_caption") %></p>
+
+    <% DiscordIntegration::Events.grouped.each do |group, events| %>
+      <div class="form--field">
+        <label class="form--label"><%= t("discord.event_groups.#{group}") %></label>
+        <div class="form--field-container -vertical">
+          <% events.each do |event, label| %>
+            <label class="form--label-with-check-box">
+              <%= check_box_tag "discord_channel[events][]",
+                                event,
+                                Array(channel.events).include?(event),
+                                id: "discord_channel_events_#{event.tr(':', '_')}" %>
+              <%= label %>
+            </label>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </fieldset>
+
+  <p>
+    <%= styled_button_tag submit_label, class: "-primary -with-icon icon-checkmark" %>
+    <%= link_to t(:button_cancel),
+                project_settings_discord_channels_path(@project),
+                class: "button -with-icon icon-cancel" %>
+  </p>
+<% end %>
