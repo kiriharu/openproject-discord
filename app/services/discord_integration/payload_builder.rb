@@ -21,7 +21,7 @@ module DiscordIntegration
         action = primary_action(event_names)
         project = work_package.project
         notes = public_notes(journal)
-        changes = change_labels(journal.details)
+        changes = action == :created ? [] : change_labels(journal.details)
 
         fields = [
           field(I18n.t("discord.fields.project"), project&.name),
@@ -51,7 +51,7 @@ module DiscordIntegration
         action = primary_action(event_names)
         project = page.wiki.project
         excerpt = wiki_excerpt(page, journal)
-        changes = change_labels(journal.details)
+        changes = action == :created ? [] : change_labels(journal.details)
 
         fields = [
           field(I18n.t("discord.fields.project"), project&.name),
